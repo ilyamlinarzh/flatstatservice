@@ -8,10 +8,13 @@ from src.initializers import dependencies_init, dependencies_list
 
 from functools import partial
 
+from src.lifespan import lifespan
+
 from src.api.v1 import router_v1
 
+
 def create_app():
-    app = FastAPI()
+    app = FastAPI(lifespan=lifespan)
 
     db_sessionmaker = create_session_maker()
     redis_pool = create_redis_pool()

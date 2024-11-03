@@ -2,6 +2,7 @@ from typing import Literal, Optional
 from src.config import Cities, ResultsData
 
 from fastapi import APIRouter, Depends
+from fastapi_cache.decorator import cache
 
 from src.dependencies import id_agent, UserMetadata
 
@@ -24,6 +25,7 @@ async def stat_new_result(
 
 
 @router_stat.get('/get')
+@cache(expire=60)
 async def get_city_stat(
         city: Literal[Cities.access_cities],
         result: Optional[Literal[ResultsData.access_results]] = None,
