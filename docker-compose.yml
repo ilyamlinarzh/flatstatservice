@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:15
+    container_name: yandexflat_db
+    env_file:
+      - .env-non-dev
+    ports:
+      - 5434:5432
+  redis:
+    image: redis:7
+    container_name: yandexflat_redis
+    ports:
+      - 6379:6379
+
+  yandexflat:
+    build:
+      context: .
+    container_name: yandexflat_app
+    env_file:
+      - .env-non-dev
+    depends_on:
+      - db
+      - redis
+    ports:
+      - 9000:8000
